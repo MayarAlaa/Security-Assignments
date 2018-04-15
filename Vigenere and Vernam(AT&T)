@@ -1,0 +1,104 @@
+#include <iostream>
+#include <string>
+#include <map>
+#include <iomanip>
+
+using namespace std;
+
+int letter_26(int x)
+{
+	if (x <= 26)
+		return x;
+	else
+	{
+		x = x % 26;
+		//cout << x << endl;
+		return letter_26(x);
+
+	}
+}
+
+int main()
+{
+	string key;
+	cin >> key;
+
+	string plain_text;
+	cin >> plain_text;
+
+	int sum;
+	int summ;
+	int XOR;
+	//char veg [10000];
+
+	//to check if oneTimePad
+
+	bool oneTimePad = false;
+
+	if (key.length() == plain_text.length())
+	{
+		oneTimePad = true;
+	}
+
+	string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	// to map each letter to a value
+	/*A 0
+	  B 1
+	  C 2
+	
+	std::map<char, int> alpha;
+	for (int i = 0; i < 26; i++)
+	{
+		alpha[alphabet[i]] = i;
+		cout << alphabet[i]<<" " << alpha[alphabet[i]]<<" "<<endl;
+		
+	}
+	*/
+	cout << "Vigenere: ";
+	int j = 0;
+	for (int i = 0; i < plain_text.length(); i++, j++)
+	{
+		if (j == key.length())
+			j = 0;
+		//sum=alpha[plain_text[i]] + alpha[key[j]];    //sum the values of the keys ,aka, number corresponding to the letter
+		sum = plain_text[i] + key[j];                  
+		summ = letter_26(sum);
+		//cout << plain_text[i] << " ";
+		//cout << key[j] << " ";
+		cout << alphabet[summ];
+		
+	}
+
+	cout << endl;
+	
+
+	cout << "Vernam: ";
+	int k = 0;
+	for (int i = 0; i < plain_text.length(); i++, k++)
+	{
+		if (k == key.length())
+			k = 0;
+		XOR = (int)(plain_text[i]) ^ (int)(key[k]);
+
+		
+		
+		cout <<std::uppercase<<std::setfill('0')<< setw(2)<<std::hex << XOR ;
+		
+
+	}
+
+	cout << endl;
+	
+
+	
+
+	if (oneTimePad == true)
+		cout << "One-Time Pad: YES";
+	else
+		cout << "One-Time Pad: NO";
+	 
+	cout << endl;
+	
+	
+		return 0;
+}
