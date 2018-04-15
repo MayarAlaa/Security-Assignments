@@ -1,0 +1,126 @@
+#include <iostream>
+#include <string>
+
+
+using namespace std;
+
+int main()
+{
+	int input_size , output_size;
+	cin >> input_size >> output_size;
+	int  order;
+	int  perm_box[64];
+
+	//to take the ordering input in this format 8 4 16 12 7 3 15 11 6 2 14 10 5 1 13 9 
+
+
+	for (int i = 0; i<output_size; i++)
+	{
+		cin >> order;
+		perm_box[i] = order;
+
+	}
+	bool reversible = true;
+	bool exists = true;
+
+	//permutation box is irrev. when size of output < size of input --> contraction 
+	
+	if (input_size > output_size)
+		reversible = false;
+
+	// or if there is missing data
+	else if (input_size < output_size  || input_size == output_size)
+	{
+	   
+		for (int i = 0; i < input_size; i++)
+		{
+			for (int j = 0; j < output_size; j++)
+			{
+				if (i + 1 == perm_box[j])
+				{
+					exists = true;  //if the number is found , no need to continue looping , go to next number(outer loop)
+					//cout << i + 1 << " exists ,go barra el inner loop" << endl;
+					break;
+				}
+				else
+					exists = false;
+					
+				
+			}
+			if (exists == false) // if the the number doesn't exist (missing data) , get out of the outer loop
+			{
+				reversible = false;
+				//cout <<i+1 << " doesn't exist ,go barra el outer loop"<<endl;
+				break;
+				
+			}
+			
+			
+		}
+	
+		
+	
+	
+	}
+	
+
+	if (reversible == false)
+	{
+		cout << "IMPOSSIBLE";
+	}
+	else {
+
+		if (output_size > input_size) //expansion repeated data
+		{
+
+			int min = 1;
+			for (int k = 0; k<input_size; k++)
+			{
+				for (int i = 0; i<output_size; i++)
+				{
+					if (perm_box[i] == min)
+					{
+						min = perm_box[i] + 1;
+						cout << i + 1 << " ";
+						break;
+					}
+
+				}
+			}
+
+		}
+		
+
+		else {
+		
+			int min = 1;
+			for (int k = 0; k<input_size; k++)
+			{
+				for (int i = 0; i<input_size; i++)
+				{
+					if (perm_box[i] == min)
+					{
+						min = perm_box[i] + 1;
+						cout << i + 1 << " ";
+						break;
+					}
+
+				}
+			}
+
+		
+		}
+
+
+	
+
+	}
+
+
+
+
+
+
+	system("pause");
+}
+
