@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+int key_26(int x)
+{
+	if (x <= 26)
+		return x;
+	else
+	{
+		x = x % 26;
+		//cout << x << endl;
+		return key_26(x);
+
+	}
+	
+}
+int main()
+{
+	int x;
+	cin >> x;
+	string str;
+	cin >> str;
+	int key;
+	key = key_26(x);
+	for (unsigned int i = 0; i<str.length(); i++) {
+
+		if (str[i] >= 'A' && str[i] <= 'Z')
+		{
+			str[i] = (char)(str[i] + key);
+			if (str[i] >'Z')
+				str[i] = (char)(str[i] - 26);
+		}
+
+
+
+		cout << str[i];
+
+	}
+	cout << endl;
+	return 0;
+	//system("pause");
+
+}
