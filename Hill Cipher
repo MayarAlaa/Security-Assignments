@@ -1,0 +1,111 @@
+#include<iostream>
+#include<string>
+#include<math.h>
+
+using namespace std;
+
+
+int main() {
+	int product;
+	string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	long long key_length;
+	cin >> key_length;
+
+	//matrix of key should be nxn
+	//matrix of plain text should be nx1
+     
+	long n;
+	n = sqrt(key_length);
+	
+	long key;
+	
+	long  key_arr[10000];
+	long key_matrix[100][100];
+	string plain_text;
+	long text_matrix[100][1];
+
+	//ask the user for the key , the array to make it in this format 7 8 11 11
+
+	for (int i = 0; i < key_length; i++)
+	{
+		cin >> key;
+		key_arr[i] = key;
+	
+	}
+	
+	//appending X's to make the length of the text divisible by the square root of the key length
+	//to be able to divide the text as required , 2 letters by 2 letters or 3 by 3 or 5 by 5 ...etc
+    cin >> plain_text;
+    int text_size = plain_text.length();
+	int remainder = plain_text.length() % n;
+	if ( remainder != 0)
+	{
+		plain_text.resize(text_size + (n-remainder), 'X');
+		
+		text_size= plain_text.length();
+
+	}
+	//cout <<plain_text << endl;
+	
+//filling the key matrix
+	int k = 0;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++, k++)
+		{
+			key_matrix[i][j] = key_arr[k];
+		}
+		
+	}
+	
+	
+	int p = 0;
+	for (int count = 0; count < text_size / n; count++)
+	{
+
+		for (int r = 0; r < n; r++)
+		{
+			for (int c = 0; c < 1; c++) {
+				text_matrix[r][c] = plain_text[p] ;
+				
+			}
+			p++;
+			//cout << p << endl;
+		}
+		
+
+		for (int i = 0; i < n; i++)
+		{
+
+			int sum = 0;
+			for (int j = 0; j < 1; j++)
+			{
+
+				for (int h = 0; h < n; h++) {
+					
+				//	int product = 1;
+					product = ((key_matrix[i][h])%26) * ((text_matrix[h][j])-65);
+					
+					sum = sum%26 + product%26;
+
+				}
+				 sum = sum % 26;
+				cout << alphabet[sum];
+
+			}
+
+	
+
+		}
+		
+	}
+
+	
+	
+	
+	cout << endl;
+
+    return 0;
+	//system("pause");
+
+}
